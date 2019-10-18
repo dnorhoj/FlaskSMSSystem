@@ -14,20 +14,10 @@ It is currently set up to automatically convert the inserted phone number to a d
 To set this script up you need [python3](https://www.python.org) and pip.
 To install the requirements via pip, run `pip install -r requirements.txt`
 
-Then you need to create these files:
-
-1. `src/users.json` which contains the username/password combinations which will be accepted by the website. Example:
-
-```json
-{
-    "admin": "password",
-    "john": "smith"
-}
-```
-
-2. `src/.env` which contains the `auth_id` and `auth_token` for plivo. You can find these on your plivo dashboard. Example:
+Then you need to create `src/.env` which contains the `auth_id` and `auth_token` for plivo. You can find these on your plivo dashboard. Example:
 
 ```env
 auth_id="id123"
 auth_token="token123"
+admin_pass="pass123"
 ```
