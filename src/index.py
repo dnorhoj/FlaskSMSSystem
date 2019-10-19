@@ -74,9 +74,9 @@ def admin_panel():
 			return jsonify({"Error": "Phone number isn't 8 numbers long."}), 400
 
 		keys = redis.lrange("sms_keys", 0, -1)
-		key = generate_random_key(8)
+		key = generate_random_key(4)
 		while key.encode() in keys:
-			key = generate_random_key(8)
+			key = generate_random_key(4)
 
 		text = "Your one time key is: {}".format(key)
 
