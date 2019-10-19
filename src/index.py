@@ -53,7 +53,6 @@ def verify_password(username, password):
 	return False
 
 @app.route('/', methods=['GET', 'POST'])
-@auth.login_required
 def root():
 	if request.method == "POST":
 		src = fix_number(request.form.get('src'))
