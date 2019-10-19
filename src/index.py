@@ -70,20 +70,25 @@ def admin_panel():
 	if request.method == "POST":
 		rcv = fix_number(request.form.get('rcv'))
 
-		if len(rcv) != 11 or len(rcv) != 11:
-			return jsonify({"Error": "Phone number isn't 8 numbers long."}), 400
-
 		keys = redis.lrange("sms_keys", 0, -1)
 		key = generate_random_key(4)
 		while key.encode() in keys:
 			key = generate_random_key(4)
+			
+		if (len(rcv) != 11 or len(rcv) != 11) and len(rcv) != 3:
+			return jsonify({"Error": "Phone number isn't 8 numbers long."}), 400
 
 		text = "Your one time key is: {}".format(key)
 
 		try:
-			message = plivo_client.messages.create(src="+4569696969", dst=rcv, text=text)
-			message_data = plivo_client.messages.get(message.message_uuid[0])
+			if len(rcv) != 3:
+				message = plivo_client.messages.create(src="+4569696969", dst=rcv, text=text)
+				message_data = plivo_client.messages.get(message.message_uuid[0])
+			
 			redis.lpush("sms_keys", key)
+			
+			if len(rcv) == 3:
+				return jsonify({"key": key})
 		except:
 			return jsonify({"Error": "Unknown Error!"})
 
