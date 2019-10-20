@@ -6,11 +6,13 @@ from redis import Redis
 from random import choice
 from string import digits
 import plivo
+import logging
 
 app = Flask(__name__)
 auth = HTTPBasicAuth()
 load_dotenv()
 redis = Redis().from_url(getenv("REDIS_URL"))
+logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(levelname)s:%(message)s")
 
 plivo_client = plivo.RestClient(getenv('AUTH_ID'), getenv('AUTH_TOKEN'))
 
@@ -42,7 +44,7 @@ def send_sms(src: str, dst: str, text: str, key=None):
 	except plivo.exceptions.ValidationError:
 		return jsonify({"Error": "Source and Destination cannot be the same"}), 400
 
-	redis.lpush("log", f"{src} => {dst} | Key: {key} | Text: {text}")
+	logging.info(f"{src} => {dst} | Key: {key} | Text: {text}")
 	message_data = plivo_client.messages.get(message.message_uuid[0])
 	return render_template("result.html", msg=message_data, admin=(key is None))
 
@@ -89,12 +91,12 @@ def admin_panel():
 			redis.lpush("sms_keys", key)
 			
 			if len(rcv) == 3:
-				redis.lpush("log", f"Generated anonymous key ({key})")
+				logging.info(f"Generated anonymous key ({key})")
 				return jsonify({"key": key})
 		except:
 			return jsonify({"Error": "Unknown Error!"})
 
-		redis.lpush("log", f"Generated key for {rcv} ({key})")
+		logging.info(f"Generated key for {rcv} ({key})")
 		return render_template("result.html", msg=message_data, admin=True)
 
 	return render_template("admin.html")
