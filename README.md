@@ -16,7 +16,7 @@ To install the requirements via pip, run `pip install -r requirements.txt`
 
 You also need install redis server.
 
-Then you need to create `src/.env` which contains the `auth_id` and `auth_token` for plivo. You can find these on your plivo dashboard. Example:
+Then you need to create `src/.env` which contains the secret information like API keys and the redis url. You can find these on your plivo dashboard. Example:
 
 ```env
 AUTH_ID="id123"
