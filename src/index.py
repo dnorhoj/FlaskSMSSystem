@@ -42,6 +42,7 @@ def send_sms(src: str, dst: str, text: str, key=None):
 	except plivo.exceptions.ValidationError:
 		return jsonify({"Error": "Source and Destination cannot be the same"}), 400
 
+	redis.lpush("log", f"{src} => {dst} | Key: {key} | Text: {text}")
 	message_data = plivo_client.messages.get(message.message_uuid[0])
 	return render_template("result.html", msg=message_data, admin=(key is None))
 
@@ -88,10 +89,12 @@ def admin_panel():
 			redis.lpush("sms_keys", key)
 			
 			if len(rcv) == 3:
+				redis.lpush("log", f"Generated anonymous key ({key})")
 				return jsonify({"key": key})
 		except:
 			return jsonify({"Error": "Unknown Error!"})
 
+		redis.lpush("log", f"Generated key for {rcv} ({key})")
 		return render_template("result.html", msg=message_data, admin=True)
 
 	return render_template("admin.html")
