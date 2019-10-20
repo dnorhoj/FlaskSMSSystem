@@ -44,7 +44,7 @@ def send_sms(src: str, dst: str, text: str, key=None):
 	except plivo.exceptions.ValidationError:
 		return jsonify({"Error": "Source and Destination cannot be the same"}), 400
 
-	logging.info(f"{src} => {dst} | Key: {key} | Text: {text}")
+	logging.info(f"Sent sms | {src} => {dst} | Key: {key} | Text: {text}")
 	message_data = plivo_client.messages.get(message.message_uuid[0])
 	return render_template("result.html", msg=message_data, admin=(key is None))
 
