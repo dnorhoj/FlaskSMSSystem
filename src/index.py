@@ -33,7 +33,7 @@ def send_sms(src: str, dst: str, text: str, key=None):
 			return jsonify({"Error": "Source or Destination numbers are not 8 characters long"}), 400
 
 	if len(text) == 0 or len(text.encode()) > 140:
-		return jsonify({"Error": "Incorrect message length"}), 400
+		return jsonify({"Error": "Invalid message length"}), 400
 
 	try:
 		message = plivo_client.messages.create(src=src, dst=dst, text=text)
