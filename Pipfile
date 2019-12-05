@@ -9,7 +9,6 @@ verify_ssl = true
 messagebird = "*"
 flask = "*"
 redis = "*"
-python-dotenv = "*"
 gunicorn = "*"
 flask-httpauth = "*"
 
