@@ -14,7 +14,12 @@
 		<form method="POST">
 			<div class="form-group">
 				<label>Reciever: </label>
-				<input type="text" class="form-control" name="rcv" placeholder="12 34 56 78" />
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<div class="input-group-text">+45</div>
+					</div>
+					<input type="text" class="form-control" name="rcv" placeholder="12 34 56 78" />
+				</div>
 			</div>
 
 			<button type="submit" class="btn btn-primary">Send key</button>

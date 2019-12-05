@@ -4,7 +4,7 @@ NOTE: This is for educational purposes only!
 
 ## What is this
 
-This is a project I made for fun to send text messages through the [plivo](https://www.plivo.com).
+This is a project I made for fun to send text messages through the [messagebird](https://messagebird.com/en/).
 It's a webserver made in [flask](https://palletsprojects.com/p/flask/) which is a python library.
 
 It is currently set up to automatically convert the inserted phone number to a danish one.
@@ -16,11 +16,10 @@ To install the requirements via pip, run `pip install -r requirements.txt`
 
 You also need install redis server.
 
-Then you need to create `src/.env` which contains the secret information like API keys and the redis url. You can find these on your plivo dashboard. Example:
+Then you need to create a `.env` which contains the secret information like API keys and the redis url. You can find these on your plivo dashboard. Example:
 
 ```env
 AUTH_ID="id123"
-AUTH_TOKEN="token123"
-ADMIN_PASS="pass123"
+MESSAGEBIRD="messagebird_api_key"
 REDIS_URL="redis://redis123"
 ```
