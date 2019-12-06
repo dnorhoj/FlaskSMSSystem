@@ -1,6 +1,6 @@
 # Flask SMS system
 
-NOTE: This is for educational purposes only!
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c0754ca2ccf4ae58c0fd20547a91043)](https://www.codacy.com/manual/dnorhoj/FlaskSMSSystem?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=dnorhoj/FlaskSMSSystem&amp;utm_campaign=Badge_Grade)
 
 ## What is this
 
