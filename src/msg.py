@@ -8,7 +8,7 @@ import messagebird
 redis = Redis().from_url(getenv("REDIS_URL"))
 msg_client = messagebird.Client(getenv('MESSAGEBIRD'))
 
-def send_sms(src: str, dst: str, text: str, key=None):
+def send_sms(src, dst, text, key=None):
 	if key is not None:
 		key = key.encode()
 		keys = redis.lrange("keys", 0, -1)
@@ -46,7 +46,7 @@ def send_sms(src: str, dst: str, text: str, key=None):
 
 	return render_template("result.html", msg=message, admin=(key is None))
 
-def make_call(src: str, dst: str, text: str, key=None):
+def make_call(src, dst, text, key=None):
 	if key is not None:
 		key = key.encode()
 		keys = redis.lrange("keys", 0, -1)

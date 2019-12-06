@@ -26,7 +26,7 @@ def admin_panel():
 			key = utils.generate_random_key(4)
 
 		if len(rcv) == 11:
-			result = msg.send_sms("NiceSMS", rcv, f"Your one time key is: {key}")
+			result = msg.send_sms("NiceSMS", rcv, "Your one time key is: {}".format(key))
 			redis.lpush("keys", key)
 			return result
 
