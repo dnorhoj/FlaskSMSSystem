@@ -14,7 +14,7 @@
 		<form method="POST">
 			<div class="form-group">
 				<label>Source: </label>
-				<input type="text" class="form-control" name="src" placeholder="NiceSMS" />
+				<input type="text" class="form-control" name="src" placeholder="NiceSMS" required />
 			</div>
 			<div class="form-group">
 				<label>Destination: </label>
@@ -22,18 +22,18 @@
 					<div class="input-group-prepend">
 						<div class="input-group-text">+45</div>
 					</div>
-					<input type="text" class="form-control" name="dst" placeholder="12 34 56 78" />
+					<input type="text" class="form-control" name="dst" placeholder="12 34 56 78" required />
 				</div>
 			</div>
 			{% if not admin %}
 			<div class="form-group">
 				<label>Key: </label>
-				<input type="text" class="form-control" name="key" placeholder="Insert key" />
+				<input type="text" class="form-control" name="key" placeholder="Insert key" required />
 			</div>
 			{% endif %}
 			<div class="form-group">
 				<label>Message Body: </label>
-				<textarea name="text" class="form-control"></textarea>
+				<textarea name="text" class="form-control" required></textarea>
 			</div>
 
 			<button type="submit" class="btn btn-primary">Submit</button>
