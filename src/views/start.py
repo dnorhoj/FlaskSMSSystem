@@ -11,6 +11,9 @@ def view():
 		key = request.form.get('key')
 		text = request.form.get('text')
 
-		return msg.send_sms(src, dst, text, key)
+		if request.form.get('callbox') is None:
+			return msg.send_sms(src, dst, text, key)
+		else:
+			return msg.make_call(src, dst, text, key)
 
-	return render_template("send_sms.html")
+	return render_template("send.html")
