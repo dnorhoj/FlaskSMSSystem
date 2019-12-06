@@ -1,4 +1,4 @@
-from flask import jsonify, render_template
+from flask import jsonify
 from random import choice
 from string import digits
 

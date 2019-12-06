@@ -29,7 +29,7 @@ def admin_panel():
 			result = msg.send_sms("NiceSMS", rcv, f"Your one time key is: {key}")
 			redis.lpush("keys", key)
 			return result
-			
+
 		elif len(rcv) == 3:
 			print(f"Generated Anonymous Key | {key}")
 			redis.lpush("keys", key)

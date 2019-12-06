@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template
-from src import utils, msg
+from src import msg
 
 start = Blueprint(__name__, 'start')
 

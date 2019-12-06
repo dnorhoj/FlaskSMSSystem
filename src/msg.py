@@ -9,7 +9,7 @@ redis = Redis().from_url(getenv("REDIS_URL"))
 msg_client = messagebird.Client(getenv('MESSAGEBIRD'))
 
 def send_sms(src: str, dst: str, text: str, key=None):
-	if not key is None:
+	if key is not None:
 		key = key.encode()
 		keys = redis.lrange("keys", 0, -1)
 		if key not in keys:
@@ -29,7 +29,7 @@ def send_sms(src: str, dst: str, text: str, key=None):
 	if len(text) == 0 or len(text.encode()) > 140:
 		return utils.error("Invalid message length")
 
-	if src.lower() == "nicesms" and not key is None:
+	if src.lower() == "nicesms" and key is not None:
 		return utils.error("Reserved sender!")
 
 	try:
@@ -47,7 +47,7 @@ def send_sms(src: str, dst: str, text: str, key=None):
 	return render_template("result.html", msg=message, admin=(key is None))
 
 def make_call(src: str, dst: str, text: str, key=None):
-	if not key is None:
+	if key is not None:
 		key = key.encode()
 		keys = redis.lrange("keys", 0, -1)
 		if key not in keys:
