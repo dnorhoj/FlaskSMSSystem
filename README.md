@@ -4,8 +4,8 @@
 
 ## What is this
 
-This is a project I made for fun to send text messages through the [messagebird](https://messagebird.com/en/).
-It's a webserver made in [flask](https://palletsprojects.com/p/flask/) which is a python library.
+This is a project I made for fun to send text messages through the [Messagebird](https://messagebird.com/en/).
+It's a webserver made in Python [Flask](https://palletsprojects.com/p/flask/).
 
 It is currently set up to automatically convert the inserted phone number to a danish one.
 
