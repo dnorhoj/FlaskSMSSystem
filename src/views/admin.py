@@ -4,6 +4,7 @@ from redis import Redis
 from src import utils, msg
 from os import getenv
 import messagebird
+import config
 
 redis = Redis().from_url(getenv("REDIS_URL"))
 msg_client = messagebird.Client(getenv('MESSAGEBIRD'))
@@ -19,18 +20,19 @@ def verify_password(username, password):
 def admin_panel():
 	if request.method == "POST":
 		rcv = utils.fix_number(request.form.get('rcv'))
+		print(rcv)
 
 		keys = redis.lrange("keys", 0, -1)
-		key = utils.generate_random_key(4)
-		while key.encode() in keys:
+		while True:
 			key = utils.generate_random_key(4)
+			if not key.encode() in keys: break
 
-		if len(rcv) == 11:
+		if len(rcv) == config.phone_total_length:
 			result = msg.send_sms("NiceSMS", rcv, f"Your one time key is: {key}")
 			redis.lpush("keys", key)
 			return result
 
-		elif len(rcv) == 3:
+		elif len(rcv) == len(config.phone_prepend):
 			print(f"Generated Anonymous Key | {key}")
 			redis.lpush("keys", key)
 			return jsonify({"key": key})
