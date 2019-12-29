@@ -7,19 +7,19 @@
 This is a project I made for fun to send text messages through the [Messagebird](https://messagebird.com/en/).
 It's a webserver made in Python [Flask](https://palletsprojects.com/p/flask/).
 
-It is currently set up to automatically convert the inserted phone number to a danish one.
+I did not make this app for other people to use. This is just for some code examples or whatever you want it to be. You're welcome to contribute but I don't ask for it, or expect it.
 
 ## Setup
 
-To set this script up you need [python3](https://www.python.org) and pip.
-To install the requirements via pip, run `pip install -r requirements.txt`
+To set this script up you need python3, pip and pipenv.
+To install the requirements with pipenv, run `pipenv install`
 
 You also need install redis server.
 
-Then you need to create a `.env` which contains the secret information like API keys and the redis url. You can find these on your plivo dashboard. Example:
+Then you need to create a `.env` which contains the secret information like API keys and the redis url.
 
-```env
-AUTH_ID="id123"
-MESSAGEBIRD="messagebird_api_key"
-REDIS_URL="redis://redis123"
+```sh
+MESSAGEBIRD="API_Key" # Messagebird API key
+ADMIN_PASS="Password for admin user" # Basic Auth pass for /admin/*
+REDIS_URL="redis://redis123" # Redis url for data storage
 ```
