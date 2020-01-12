@@ -79,4 +79,7 @@ def get_msg(msg_id):
 	try:
 		return msg_client.message(msg_id)
 	except messagebird.ErrorException:
-		return utils.error("Message not found!")
+		try:
+			return msg_client.voice_message(msg_id)
+		except messagebird.ErrorException:
+			return utils.error("Message not found!")
