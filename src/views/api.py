@@ -12,12 +12,11 @@ auth.verify_password(utils.verify_password)
 
 def send_response(result):
 	return {
-		"id": result.get("id"),
-		"type": result.get("type", "voice"),
-		"from": result.get("originator"),
-		"to": "+"+str(result.get("recipients")['items'][0].recipient),
-		"message": result.get("body"),
-		"status": result.get("recipients")['items'][0].status,
+		"id": result.id,
+		"from": result.originator,
+		"to": "+"+str(result.recipients['items'][0].recipient),
+		"message": result.body,
+		"status": result.recipients['items'][0].status,
 	}
 
 @api.resource("/message/send")
