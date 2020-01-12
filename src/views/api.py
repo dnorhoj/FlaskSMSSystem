@@ -34,8 +34,8 @@ class SendMessage(Resource):
 		arg = (args["from"], args["to"], args["message"])
 		if args["call"]:
 			result = msg.make_call(*arg)
-
-		result = msg.send_sms(*arg)
+		else:
+			result = msg.send_sms(*arg)
 
 		return send_response(result)
 
