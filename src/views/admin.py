@@ -8,14 +8,12 @@ import config
 
 redis = Redis().from_url(getenv("REDIS_URL"))
 msg_client = messagebird.Client(getenv('MESSAGEBIRD'))
-admin = Blueprint(__name__, 'admin')
+admin_blueprint = Blueprint(__name__, 'admin')
 
 auth = HTTPBasicAuth()
-@auth.verify_password
-def verify_password(username, password):
-	return (username, password) == ("admin", getenv("ADMIN_PASS"))
+auth.verify_password(utils.verify_password)
 
-@admin.route('/', methods=['GET', 'POST'])
+@admin_blueprint.route('/', methods=['GET', 'POST'])
 @auth.login_required
 def admin_panel():
 	if request.method == "POST":
@@ -30,7 +28,10 @@ def admin_panel():
 		if len(rcv) == config.phone_total_length:
 			result = msg.send_sms("NiceSMS", rcv, f"Your one time key is: {key}")
 			redis.lpush("keys", key)
-			return result
+			if type(result) == str:
+				return result
+
+			return render_template("result.html", msg=result, admin=True)
 
 		elif len(rcv) == len(config.phone_prepend):
 			print(f"Generated Anonymous Key | {key}")
@@ -41,7 +42,7 @@ def admin_panel():
 
 	return render_template("admin.html")
 
-@admin.route('/send', methods=['GET', 'POST'])
+@admin_blueprint.route('/send', methods=['GET', 'POST'])
 @auth.login_required
 def admin_sms():
 	if request.method == "POST":
@@ -50,8 +51,13 @@ def admin_sms():
 		text = request.form.get('text')
 
 		if request.form.get('callbox') is None:
-			return msg.send_sms(src, dst, text)
+			result =  msg.send_sms(src, dst, text)
 		else:
-			return msg.make_call(src, dst, text)
+			result = msg.make_call(src, dst, text)
+		
+		if type(result) == tuple:
+			return result
+			
+		return render_template("result.html", msg=result, admin=True)
 
 	return render_template("send.html", admin=True)

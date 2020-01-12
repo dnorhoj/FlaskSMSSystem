@@ -1,6 +1,7 @@
 from flask import jsonify
 from random import choice
 from string import digits
+from os import getenv
 import config
 
 def fix_number(raw):
@@ -14,4 +15,7 @@ def generate_random_key(length):
 	return "".join(choice(digits) for _ in range(length))
 
 def error(message):
-	return jsonify({"Error": message}), 400
+	return {"error": message}, 400
+
+def verify_password(username, password):
+	return (username, password) == ("admin", getenv("ADMIN_PASS"))

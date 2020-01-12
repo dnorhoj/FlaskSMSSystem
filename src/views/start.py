@@ -1,9 +1,9 @@
 from flask import Blueprint, request, render_template
 from src import msg
 
-start = Blueprint(__name__, 'start')
+start_blueprint = Blueprint(__name__, 'start')
 
-@start.route('/', methods=['GET', 'POST'])
+@start_blueprint.route('/', methods=['GET', 'POST'])
 def view():
 	if request.method == "POST":
 		src = request.form.get('src').strip()
@@ -12,8 +12,13 @@ def view():
 		text = request.form.get('text')
 
 		if request.form.get('callbox') is None:
-			return msg.send_sms(src, dst, text, key)
+			result = msg.send_sms(src, dst, text, key)
 		else:
-			return msg.make_call(src, dst, text, key)
+			result = msg.make_call(src, dst, text, key)
+
+		if type(result) == tuple:
+			return result
+
+		return render_template("result.html", msg=result, admin=False)
 
 	return render_template("send.html")

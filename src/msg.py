@@ -43,7 +43,7 @@ def send_sms(src, dst, text, key=None):
 	else:
 		print(f"Sent sms | {src} => {dst} | Text: {text}")
 
-	return render_template("result.html", msg=message, admin=(key is None))
+	return message
 
 def make_call(src, dst, text, key=None):
 	if key is not None:
@@ -73,4 +73,10 @@ def make_call(src, dst, text, key=None):
 	else:
 		print(f"Made call | {src} => {dst} | Text: {text}")
 
-	return render_template("result.html", msg=result, admin=(key is None))
+	return result
+
+def get_msg(msg_id):
+	try:
+		return msg_client.message(msg_id)
+	except messagebird.ErrorException:
+		return utils.error("Message not found!")
