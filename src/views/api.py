@@ -1,8 +1,7 @@
-from flask import Blueprint, request
+from flask import Blueprint
 from flask_restful import Resource, Api, reqparse, inputs
 from flask_httpauth import HTTPBasicAuth
 from src import utils, msg
-import json
 
 api_blueprint = Blueprint(__name__, 'api')
 api = Api(api_blueprint)
@@ -22,6 +21,7 @@ def send_response(result):
 @api.resource("/message/send")
 class SendMessage(Resource):
 	@auth.login_required
+	@staticmethod
 	def post(self):
 		parser = reqparse.RequestParser()
 		parser.add_argument("from", required=True, type=str)
@@ -41,10 +41,11 @@ class SendMessage(Resource):
 @api.resource("/message/get/<string:msg_id>")
 class GetMessage(Resource):
 	@auth.login_required
-	def get(self, msg_id):
+	@staticmethod
+	def get(msg_id):
 		result = msg.get_msg(msg_id)
 
-		if type(result) == tuple:
+		if isinstance(result, tuple):
 			return result
 
 		return send_response(result)
