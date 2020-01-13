@@ -28,7 +28,7 @@ def admin_panel():
 		if len(rcv) == config.phone_total_length:
 			result = msg.send_sms("NiceSMS", rcv, f"Your one time key is: {key}")
 			redis.lpush("keys", key)
-			if type(result) == str:
+			if isinstance(result, tuple):
 				return result
 
 			return render_template("result.html", msg=result, admin=True)
@@ -54,10 +54,10 @@ def admin_sms():
 			result =  msg.send_sms(src, dst, text)
 		else:
 			result = msg.make_call(src, dst, text)
-		
-		if type(result) == tuple:
+
+		if isinstance(result, tuple):
 			return result
-			
+
 		return render_template("result.html", msg=result, admin=True)
 
 	return render_template("send.html", admin=True)

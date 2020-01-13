@@ -1,4 +1,3 @@
-from flask import jsonify
 from random import choice
 from string import digits
 from os import getenv

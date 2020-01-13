@@ -1,4 +1,3 @@
-from flask import render_template
 from src import utils
 from os import getenv
 from redis import Redis

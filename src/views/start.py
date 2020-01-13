@@ -16,7 +16,7 @@ def view():
 		else:
 			result = msg.make_call(src, dst, text, key)
 
-		if type(result) == tuple:
+		if isinstance(result, tuple):
 			return result
 
 		return render_template("result.html", msg=result, admin=False)
